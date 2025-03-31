@@ -3,18 +3,22 @@ import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [ react() ],
+  plugins: [react()],
   server: {
     headers: {
       "Cross-Origin-Embedder-Policy": "require-corp",
-      "Cross-Origin-Opener-Policy": "same-origin"
+      "Cross-Origin-Opener-Policy": "same-origin",
     },
     proxy: {
       '/cdn': {
         target: 'https://unpkg.com',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/cdn/, '')
-      }
-    }
-  }
-})
+        rewrite: (path) => path.replace(/^\/cdn/, ''),
+      },
+    },
+  },
+  build: {
+    outDir: 'build', // Specify the output directory for build artifacts
+    chunkSizeWarningLimit: 1000, // Increase the chunk size warning limit if needed
+  },
+});
