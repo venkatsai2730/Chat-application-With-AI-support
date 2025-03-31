@@ -1,31 +1,31 @@
-import React, { useState, useContext } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { UserContext } from '../context/user.context'
-import axios from '../config/axios'
+import React, { useState, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { UserContext } from '../context/user.context';
+import axios from '../config/axios';
 
 const Register = () => {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [isLoading, setIsLoading] = useState(false)
-    const [error, setError] = useState('')
-    const { setUser } = useContext(UserContext)
-    const navigate = useNavigate()
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState('');
+    const { setUser } = useContext(UserContext);
+    const navigate = useNavigate();
 
     const submitHandler = async (e) => {
-        e.preventDefault()
-        setError('')
-        setIsLoading(true)
+        e.preventDefault();
+        setError('');
+        setIsLoading(true);
 
         try {
-            const { data } = await axios.post('/users/register', { email, password })
-            localStorage.setItem('token', data.token)
-            setUser(data.user)
-            navigate('/')
+            const { data } = await axios.post('/users/register', { email, password });
+            localStorage.setItem('token', data.token);
+            setUser(data.user);
+            navigate('/');
         } catch (err) {
-            setError(err.response?.data?.message || 'Registration failed. Please try again.')
-            setIsLoading(false)
+            setError(err.response?.data?.message || 'Registration failed. Please try again.');
+            setIsLoading(false);
         }
-    }
+    };
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-900 via-indigo-900 to-blue-900 animate-gradient">
@@ -41,40 +41,40 @@ const Register = () => {
                         </div>
                     )}
 
-                    <div className="relative group">
+                    <div className="space-y-2">
+                        <label
+                            htmlFor="email"
+                            className="block text-sm font-medium text-gray-300"
+                        >
+                            Email
+                        </label>
                         <input
                             id="email"
                             type="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             className="w-full px-4 py-3 rounded-lg bg-white bg-opacity-5 border border-white border-opacity-20 focus:outline-none focus:border-opacity-40 focus:bg-opacity-10 text-gray-100 placeholder-gray-300 transition-all duration-300"
-                            placeholder=" "
+                            placeholder="Enter your email"
                             required
                         />
-                        <label 
-                            htmlFor="email"
-                            className="absolute left-4 top-3 text-gray-300 pointer-events-none transition-all duration-300 group-focus-within:-top-3 group-focus-within:text-sm group-focus-within:text-blue-400"
-                        >
-                            Email
-                        </label>
                     </div>
 
-                    <div className="relative group">
+                    <div className="space-y-2">
+                        <label
+                            htmlFor="password"
+                            className="block text-sm font-medium text-gray-300"
+                        >
+                            Password
+                        </label>
                         <input
                             id="password"
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             className="w-full px-4 py-3 rounded-lg bg-white bg-opacity-5 border border-white border-opacity-20 focus:outline-none focus:border-opacity-40 focus:bg-opacity-10 text-gray-100 placeholder-gray-300 transition-all duration-300"
-                            placeholder=" "
+                            placeholder="Enter your password"
                             required
                         />
-                        <label 
-                            htmlFor="password"
-                            className="absolute left-4 top-3 text-gray-300 pointer-events-none transition-all duration-300 group-focus-within:-top-3 group-focus-within:text-sm group-focus-within:text-blue-400"
-                        >
-                            Password
-                        </label>
                     </div>
 
                     <button
@@ -92,8 +92,8 @@ const Register = () => {
 
                 <p className="text-center mt-6 text-gray-300">
                     Already have an account?{' '}
-                    <Link 
-                        to="/login" 
+                    <Link
+                        to="/login"
                         className="text-blue-300 hover:text-blue-400 font-semibold underline-animation"
                     >
                         Login here
@@ -101,7 +101,7 @@ const Register = () => {
                 </p>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Register
+export default Register;
